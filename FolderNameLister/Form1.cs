@@ -45,9 +45,43 @@ namespace FolderNameLister
 
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
-       
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                textBox2.Clear();
+                string path = textBox1.Text;
+                if (string.IsNullOrEmpty(path) || string.IsNullOrWhiteSpace(path))
+                {
+                    MessageBox.Show("Hatalı Dizin Adresi / Directory Path should be checked.");
+                }
+                else
+                {
+                    path.Trim();
+                    DirectoryInfo d = new DirectoryInfo(path);
+
+                    IEnumerable<DirectoryInfo> fi = d.EnumerateDirectories();
+                    textBox1.ScrollBars = ScrollBars.Vertical;
+                    foreach (var directory in fi)
+                    {
+                        DirSortProcess dp = new DirSortProcess();
+                        textBox2.Text += directory.Name + "\r\n";
+                        textBox2.Text += dp.GetDirections(directory.FullName);
+
+
+
+                    }
+                }
+            }
+
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
